@@ -7,6 +7,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
 /**
@@ -20,12 +23,12 @@ import android.view.ViewGroup;
 public class ListFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private ListView list;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private String[] listData = {"Ubuntu", "Android", "iOS", "Windows", "Mac OSX", "Google Chrome OS", "Debian", "Mandriva", "Solaris", "Unix"};
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Boolean mParam1;
 
     private OnFragmentInteractionListener mListener;
 
@@ -46,8 +49,7 @@ public class ListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mParam1 = getArguments().getBoolean(ARG_PARAM1);
         }
     }
 
@@ -55,7 +57,23 @@ public class ListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_list, container, false);
+        // Adding View
+        View view =inflater.inflate(R.layout.fragment_list, container, false);
+        list = (ListView)view.findViewById(R.id.itemlistView);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View view, int position, long id) {
+                mListener.onFragmentInteraction(Uri.parse(arg0.getItemAtPosition(position).toString()));
+            }
+        });
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, listData);
+        list.setAdapter(adapter);
+
+        if(mParam1){
+            mListener.onFragmentInteraction(Uri.parse(list.getItemAtPosition(0).toString()));
+        }
+        return view;
+        //return inflater.inflate(R.layout.fragment_list, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

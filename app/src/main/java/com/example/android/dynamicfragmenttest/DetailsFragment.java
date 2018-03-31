@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -56,7 +57,11 @@ public class DetailsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
+        TextView detailsText = (TextView)view.findViewById(R.id.detailsText);
+        detailsText.setText(mParam1);
+        return view;
+        //return inflater.inflate(R.layout.fragment_details, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -96,5 +101,8 @@ public class DetailsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public interface OnDetalleFragmentInteractionListener {
     }
 }

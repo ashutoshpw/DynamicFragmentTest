@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements ListFragment.OnFragmentInteractionListener, DetailsFragment.OnFragmentInteractionListener {
 
@@ -16,6 +17,12 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnFr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (findViewById(R.id.details) != null) {
+            visible_details = true;
+        }else{
+            visible_details = false;
+        }
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
@@ -30,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements ListFragment.OnFr
     @Override
     public void onFragmentInteraction(Uri uri) {
         String element = uri.toString();
+        Toast.makeText(this, "Toast - " + element, Toast.LENGTH_SHORT).show();
         if(visible_details) {
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
